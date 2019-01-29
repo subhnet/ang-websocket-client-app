@@ -10,18 +10,19 @@ import { StompService } from '@stomp/ng2-stompjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Websocket demo';
   private subs: Subscription;
-
+  inputVal = '';
   constructor(private stompService: StompService) { }
 
   ngOnInit() {
-    this.subs = this.stompService.subscribe('/chat').subscribe((data) => {
+    this.subs = this.stompService.subscribe('/topic').subscribe((data) => {
       console.log('subscribed to chat..', data);
     });
   }
 
   sendMessage() {
-    const outGoingMessage = JSON.stringify({ message: 'Hello from the shubh client' });
-    this.stompService.publish('/app/send/message', outGoingMessage);
+    const outGoingMessage = JSON.stringify({ message: this.inputVal });
+    console.log(outGoingMessage);
+    this.stompService.publish('/app/guestchat', outGoingMessage);
   }
 
   ngOnDestroy() {

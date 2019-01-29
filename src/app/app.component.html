@@ -1,7 +1,7 @@
 <table>
   <tr>
-    <input  id="input" type="text" #input>
-    <input type="button" (click)="sendMessage(input.value)" value="Send">
+    <input [(ngModel)]="inputVal" #ctrl="ngModel" required>
+    <input type="button" (click)="sendMessage()" value="Send">
   </tr>
 
 
