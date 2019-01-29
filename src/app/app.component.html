@@ -1,6 +1,9 @@
+<app-chat-box></app-chat-box>
+
+
 <table>
   <tr>
-    <input [(ngModel)]="inputVal" #ctrl="ngModel" required>
+    <input [(ngModel)]="inputVal" #ctrl="ngModel" (ngModelChange)="sendTypingEvent()">
     <input type="button" (click)="sendMessage()" value="Send">
   </tr>
 

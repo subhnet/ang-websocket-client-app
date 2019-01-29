@@ -25,6 +25,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.stompService.publish('/app/guestchat', outGoingMessage);
   }
 
+  sendTypingEvent() {
+    console.log('sending typing event...');
+    this.stompService.publish('/app/userupdates', 'true');
+  }
+
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
