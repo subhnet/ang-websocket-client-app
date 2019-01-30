@@ -1,7 +1,23 @@
-<p>
-  chat-box works!
-</p>
+<div id="wrapper">
+    <div id="menu">
+        <p class="welcome">Welcome, <b></b></p>
+        <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
+        <div style="clear:both"></div>
+    </div>
 
-<div *ngIf="isUserTyping">
-  User is Typing....
+    <div id="chatbox">
+
+
+        <div *ngIf="isUserTyping && otherUser">
+        {{otherUser.firstName}} is Typing....
+        </div>
+    </div>
+
+    <!-- <form name="message" action="">
+    </form> -->
+    <div id="inputBox">
+        <input id="usermsg" type="text" [(ngModel)]="inputVal" #ctrl="ngModel" (ngModelChange)="sendTypingEvent()">
+        <input style="width: 18%" id="submitmsg" type="submit" (click)="sendMessage()" value="Send">
+    </div>
+
 </div>

@@ -11,19 +11,59 @@ import { isNullOrUndefined } from 'util';
 export class ChatBoxComponent implements OnInit, OnDestroy {
 
   isUserTyping = false;
-  subs: Subscription;
+  subs1: Subscription;
+  subs2: Subscription;
+  inputVal = '';
+
+  otherUser = {
+    userId: 0,
+    firstName: '',
+    lastName: '',
+    shortName: '',
+    userType: ''
+  };
+
+  currentUserContent = {
+    senderId: '111',
+    senderName: 'Rakesh',
+    timestamp: new Date(),
+    message: ''
+  };
+
+  loggedUser = {
+    userId: 111,
+    firstName: 'Rakesh',
+    lastName: 'Maharana',
+    shortName: 'Lipu',
+    userType: ''
+  };
   constructor(private stompService: StompService) { }
 
   ngOnInit() {
-    this.subs = this.stompService.subscribe('/topic/userupdates').subscribe((data) => {
+    this.subs1 = this.stompService.subscribe('/topic/userupdates').subscribe((data) => {
       this.isUserTyping = !isNullOrUndefined(data);
-      console.log('User is typing...', data);
+      this.otherUser = JSON.parse(data.body);
+      console.log('User is typing...', data.body);
+    });
+    this.subs2 = this.stompService.subscribe('/topic').subscribe((data) => {
+      console.log('subscribed to chat..', data);
     });
   }
 
+  sendMessage() {
+    this.currentUserContent.message = this.inputVal;
+    console.log(JSON.stringify(this.currentUserContent));
+    this.stompService.publish('/app/guestchat', JSON.stringify(this.currentUserContent));
+  }
+
+  sendTypingEvent() {
+    console.log('sending typing event...');
+    this.stompService.publish('/app/userupdates', JSON.stringify(this.loggedUser));
+  }
 
   ngOnDestroy() {
-    this.subs.unsubscribe();
+    this.subs1.unsubscribe();
+    this.subs2.unsubscribe();
   }
 
 }

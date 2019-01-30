@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StompService, StompConfig } from '@stomp/ng2-stompjs';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
+import { LoginBoxComponent } from './login-box/login-box.component';
 
 const stompConfig: StompConfig = {
   // added '/websocket' for spring boot SockJS
@@ -19,13 +20,11 @@ const stompConfig: StompConfig = {
   debug: true
 };
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
-    ChatBoxComponent
+    ChatBoxComponent,
+    LoginBoxComponent
   ],
   imports: [
     BrowserModule,
