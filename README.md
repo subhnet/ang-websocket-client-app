@@ -1,6 +1,10 @@
 # AngWebsocketClientApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.3.
+install stomp by
+`npm i @stomp/ng2-stompjs`
+
+
+server for this project is developed using spring boot websocket [spring-boot-websocket-server-demo](https://github.com/Subhmaharana/spring-boot-websocket-server-demo)
 
 ## Development server
 
