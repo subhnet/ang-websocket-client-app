@@ -1,4 +1,4 @@
-# AngWebsocketClientApp
+# Angular Websocket Client App (STOMP)
 
 install stomp by
 `npm i @stomp/ng2-stompjs`
