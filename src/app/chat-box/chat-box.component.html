@@ -1,6 +1,6 @@
 <div id="wrapper">
     <div id="menu">
-        <p class="welcome">Welcome, <b></b></p>
+        <p class="welcome">Welcome, {{loggedUser.firstName}}<b></b></p>
         <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
         <div style="clear:both"></div>
     </div>
@@ -16,7 +16,7 @@
     <!-- <form name="message" action="">
     </form> -->
     <div id="inputBox">
-        <input id="usermsg" type="text" [(ngModel)]="inputVal" #ctrl="ngModel" (ngModelChange)="sendTypingEvent()">
+        <input id="usermsg" type="text" [(ngModel)]="inputVal" #ctrl="ngModel" (blur)="sendTypingEvent('stopped')" (keyup)="sendTypingEvent('typing')">
         <input style="width: 18%" id="submitmsg" type="submit" (click)="sendMessage()" value="Send">
     </div>
 

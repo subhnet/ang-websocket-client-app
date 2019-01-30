@@ -32,22 +32,35 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
 
   loggedUser = {
     userId: 111,
-    firstName: 'Rakesh',
-    lastName: 'Maharana',
-    shortName: 'Lipu',
-    userType: ''
+    firstName: '',
+    lastName: '',
+    shortName: '',
+    userType: '',
+    event: 'stopped'
   };
   constructor(private stompService: StompService) { }
 
   ngOnInit() {
     this.subs1 = this.stompService.subscribe('/topic/userupdates').subscribe((data) => {
-      this.isUserTyping = !isNullOrUndefined(data);
+      this.isUserTyping = JSON.parse(data.body).event === 'typing' && (this.loggedUser.firstName !== JSON.parse(data.body).firstName);
       this.otherUser = JSON.parse(data.body);
       console.log('User is typing...', data.body);
     });
     this.subs2 = this.stompService.subscribe('/topic').subscribe((data) => {
       console.log('subscribed to chat..', data);
     });
+
+
+
+
+    this.loggedUser = {
+      userId: 111,
+      firstName: localStorage.getItem('loggedUser'),
+      lastName: 'Maharana',
+      shortName: 'Lipu',
+      userType: '',
+      event: 'stopped'
+    };
   }
 
   sendMessage() {
@@ -56,8 +69,10 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     this.stompService.publish('/app/guestchat', JSON.stringify(this.currentUserContent));
   }
 
-  sendTypingEvent() {
-    console.log('sending typing event...');
+  sendTypingEvent(event) {
+    console.log('sending typing event...', event);
+
+    this.loggedUser.event = event;
     this.stompService.publish('/app/userupdates', JSON.stringify(this.loggedUser));
   }
 

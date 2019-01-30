@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-box',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginBoxComponent implements OnInit {
 
-  constructor() { }
+  name = '';
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  doLogin() {
+    localStorage.setItem('loggedUser', this.name);
+    this.router.navigate(['/chat-page']);
   }
 
 }
